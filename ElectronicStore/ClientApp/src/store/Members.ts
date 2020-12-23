@@ -1,0 +1,210 @@
+import { Action, Reducer } from 'redux';
+import { AppThunkAction } from '.';
+//import { stat } from 'fs';
+
+// -----------------
+// STATE - This defines the type of data maintained in the Redux store.
+
+export interface MembersState {
+    isLoading: boolean;
+    startDateIndex?: number;
+    members: Member[];
+    uivalues: Member;
+}
+
+export interface Member {
+    MemberId: number;
+    FirstName: string;
+    LastName: string;
+    Address: string;   
+    EmailId: string;
+    ContactNumber: string;
+    StartDate: string;
+    EndDate: string;
+}
+
+// -----------------
+// ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
+// They do not themselves have any side-effects; they just describe something that is going to happen.
+
+interface RequestMembersAction {
+    type: 'REQUEST_MEMBERS';
+    startDateIndex: number;
+}
+
+interface ReceiveMembersAction {
+    type: 'RECEIVE_MEMBERS';
+    startDateIndex: number;
+    members: Member[];
+}
+
+export interface ChangeMemberValuesAction { 
+    type: 'CHANGES_TEXT_MEMBER'; 
+    controlName: string; 
+    controlValue: string;
+}
+
+export interface MemberSelectionChangedAction {
+    type: 'MEMBER_SELECTED_ITEM';
+    value: number;
+}
+export interface SaveStartedAction {
+    type: 'SAVE_STARTED';
+}
+
+export interface SaveFinishedAction {
+    type: 'SAVE_FINISHED';
+    savedMember: Member;
+}
+
+export interface DeleteMemberAction {
+    type: 'DELETE_MEMBER';
+    value: number;
+}
+
+// Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
+// declared type strings (and not any other arbitrary string).
+type KnownAction = RequestMembersAction | ReceiveMembersAction | ChangeMemberValuesAction | MemberSelectionChangedAction | SaveStartedAction | SaveFinishedAction | DeleteMemberAction;
+
+// ----------------
+// ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
+// They don't directly mutate state, but they can have external side-effects (such as loading data).
+
+export const actionCreators = {
+    requestMembers: (startDateIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        // Only load data if it's something we don't already have (and are not already loading)
+        fetch(`member`)
+            .then(response => response.json() as Promise<Member[]>)
+            .then(data => {
+                dispatch({ type: 'RECEIVE_MEMBERS', startDateIndex: startDateIndex, members: data });
+            });
+
+        dispatch({ type: 'REQUEST_MEMBERS', startDateIndex: startDateIndex });
+
+    },
+    memberValueChange: (changedControl: string, changedValue: string) => ({ type: 'CHANGES_TEXT_MEMBER', controlName: changedControl, controlValue: changedValue } as ChangeMemberValuesAction),
+    triggerAddOrEdit: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let member = getState().members;
+        if (member) {
+            fetch(`member`,
+                {
+                    method: 'post',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(member.uivalues),
+                }
+            ).then(response => response.json() as Promise<Member>)
+                .then(data => {
+                    dispatch({ type: 'SAVE_FINISHED', savedMember: data });
+                });
+            dispatch({ type: 'SAVE_STARTED' });
+        }
+    },
+
+    triggerMemberDelete: (selectedValue: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let member = getState().members;
+        if (member) {
+            fetch(`member`,
+                {
+                    method: 'delete',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(member.members.filter(m => m.MemberId === selectedValue)[0]),
+                }
+            ).then(response => response.json() as Promise<Member>)
+                .then(data => {
+                    dispatch({ type: 'DELETE_MEMBER', value: selectedValue });
+                });
+            dispatch({ type: 'DELETE_MEMBER', value: selectedValue });
+        }
+    },
+
+    selectItem: (selectedValue: number) => ({ type: 'MEMBER_SELECTED_ITEM', value: selectedValue } as MemberSelectionChangedAction)
+};
+
+// ----------------
+// REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
+
+const noMemberState = {
+    ContactNumber: "", EmailId: "", FirstName: "", MemberId: 0, LastName: "", Address: "", StartDate: "", EndDate: ""
+}
+
+const unloadedState: MembersState = {
+    members: [], isLoading: false, uivalues: noMemberState
+};
+
+export const reducer: Reducer<MembersState> = (state: MembersState | undefined, incomingAction: Action): MembersState => {
+    if (state === undefined) {
+        return unloadedState;
+    }
+
+    const action = incomingAction as KnownAction;
+    switch (action.type) {
+        case 'REQUEST_MEMBERS':
+            return {
+                startDateIndex: action.startDateIndex,
+                members: state.members,
+                isLoading: true,
+                uivalues: state.uivalues
+            };
+        case 'RECEIVE_MEMBERS':
+            // Only accept the incoming data if it matches the most recent request. This ensures we correctly
+            // handle out-of-order responses.
+            if (action.startDateIndex === state.startDateIndex) {
+                return {
+                    startDateIndex: action.startDateIndex,
+                    members: action.members,
+                    isLoading: false,
+                    uivalues: state.uivalues
+                };
+            };
+            break;
+        case 'CHANGES_TEXT_MEMBER':
+            let lUivalues = {...state.uivalues};
+            switch(action.controlName)
+            {
+                case 'FirstName':
+                    lUivalues.FirstName = action.controlValue;
+                    break;
+                case 'ContactNumber':
+                    lUivalues.ContactNumber = action.controlValue;
+                    break;
+                case 'EmailId':
+                    lUivalues.EmailId = action.controlValue;
+                    break;
+                case 'LastName':
+                    lUivalues.LastName = action.controlValue;
+                    break;
+                case 'Address':
+                    lUivalues.Address = action.controlValue;
+                    break;
+                case 'StartDate':
+                    lUivalues.StartDate = action.controlValue;
+                    break;
+                case 'EndDate':
+                    lUivalues.EndDate = action.controlValue;
+                    break;
+                default:
+                    break;
+            }
+            return  {
+                startDateIndex: state.startDateIndex,
+                members: state.members,
+                isLoading: false,
+                uivalues: lUivalues
+            }
+        case 'MEMBER_SELECTED_ITEM':
+            let sItem = action.value === 0 ? noMemberState : state.members.filter(x => x.MemberId === action.value)[0];
+            let lState = { ...state, uivalues: sItem };
+            return lState;
+        case 'SAVE_FINISHED':
+            let mState = { ...state, uivalues: action.savedMember };
+            mState.members.push(action.savedMember);
+            return mState;
+        case 'DELETE_MEMBER':
+            let dState = { ...state, members: state.members.filter(m => m.MemberId !== action.value), uivalues: noMemberState };
+            return dState;
+        default:
+            return state;
+    }
+
+    return state;
+};

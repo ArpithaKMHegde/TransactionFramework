@@ -1,0 +1,86 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicStore", "ElectronicStore\ElectronicStore.csproj", "{CC6159C4-311A-445D-8AB3-7B078FCA69BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionsAPI", "TransactionsAPI\TransactionsAPI.csproj", "{22D9C7C8-A4A5-4197-BC76-CFBCBF482D54}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductsAPI", "ProductsAPI\ProductsAPI.csproj", "{F9B71E9D-C83D-4FF0-A591-1BDF124CC96C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MembersAPI", "MembersAPI\MembersAPI.csproj", "{4D9495C2-E8A3-48E9-9BF1-4AE89EF4DB7B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLScripts", "SQLScripts", "{EB235495-593F-48DA-87D1-1D1034C259AE}"
+	ProjectSection(SolutionItems) = preProject
+		SQLScripts\001_CreateDatabase.sql = SQLScripts\001_CreateDatabase.sql
+		SQLScripts\002_CreateUserTable.sql = SQLScripts\002_CreateUserTable.sql
+		SQLScripts\003_CreateRoleTable.sql = SQLScripts\003_CreateRoleTable.sql
+		SQLScripts\004_CreateUserRoleAssociationTable.sql = SQLScripts\004_CreateUserRoleAssociationTable.sql
+		SQLScripts\005_CreateEmployeeTable.sql = SQLScripts\005_CreateEmployeeTable.sql
+		SQLScripts\006_CreateSupplierTable.sql = SQLScripts\006_CreateSupplierTable.sql
+		SQLScripts\007_CreateCustomerTable.sql = SQLScripts\007_CreateCustomerTable.sql
+		SQLScripts\008_CreateProductTable.sql = SQLScripts\008_CreateProductTable.sql
+		SQLScripts\009_CreateDescriptorTable.sql = SQLScripts\009_CreateDescriptorTable.sql
+		SQLScripts\010_CreateItemDescriptorTable.sql = SQLScripts\010_CreateItemDescriptorTable.sql
+		SQLScripts\011_CreateSalesTable.sql = SQLScripts\011_CreateSalesTable.sql
+		SQLScripts\012_CreateSalesDetailsTable.sql = SQLScripts\012_CreateSalesDetailsTable.sql
+		SQLScripts\013_CreateTransactionTable.sql = SQLScripts\013_CreateTransactionTable.sql
+		SQLScripts\014_StoredProceduresProducts.sql = SQLScripts\014_StoredProceduresProducts.sql
+		SQLScripts\015_sp_User.sql = SQLScripts\015_sp_User.sql
+		SQLScripts\016_sp_CommunityMember.sql = SQLScripts\016_sp_CommunityMember.sql
+		SQLScripts\017_sp_Product.sql = SQLScripts\017_sp_Product.sql
+		SQLScripts\018_sp_Sales.sql = SQLScripts\018_sp_Sales.sql
+		SQLScripts\019_sp_SalesDetails.sql = SQLScripts\019_sp_SalesDetails.sql
+		SQLScripts\019_sp_Transaction.sql = SQLScripts\019_sp_Transaction.sql
+		SQLScripts\020_view_Transaction.sql = SQLScripts\020_view_Transaction.sql
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseConnect", "DatabaseConnect\DatabaseConnect.csproj", "{91E0C981-9840-4B29-881F-C56C765A2497}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modals", "Modals\Modals.csproj", "{1783C822-8D84-47B2-9010-BDC8F2504AAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoTransactionFramework", "DemoTransactionFramework\DemoTransactionFramework.csproj", "{449E1DB5-1BB9-494A-BE03-0F819691666B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC6159C4-311A-445D-8AB3-7B078FCA69BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC6159C4-311A-445D-8AB3-7B078FCA69BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC6159C4-311A-445D-8AB3-7B078FCA69BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC6159C4-311A-445D-8AB3-7B078FCA69BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22D9C7C8-A4A5-4197-BC76-CFBCBF482D54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22D9C7C8-A4A5-4197-BC76-CFBCBF482D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22D9C7C8-A4A5-4197-BC76-CFBCBF482D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22D9C7C8-A4A5-4197-BC76-CFBCBF482D54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9B71E9D-C83D-4FF0-A591-1BDF124CC96C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9B71E9D-C83D-4FF0-A591-1BDF124CC96C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9B71E9D-C83D-4FF0-A591-1BDF124CC96C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9B71E9D-C83D-4FF0-A591-1BDF124CC96C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D9495C2-E8A3-48E9-9BF1-4AE89EF4DB7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D9495C2-E8A3-48E9-9BF1-4AE89EF4DB7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D9495C2-E8A3-48E9-9BF1-4AE89EF4DB7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D9495C2-E8A3-48E9-9BF1-4AE89EF4DB7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91E0C981-9840-4B29-881F-C56C765A2497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91E0C981-9840-4B29-881F-C56C765A2497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91E0C981-9840-4B29-881F-C56C765A2497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91E0C981-9840-4B29-881F-C56C765A2497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1783C822-8D84-47B2-9010-BDC8F2504AAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1783C822-8D84-47B2-9010-BDC8F2504AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1783C822-8D84-47B2-9010-BDC8F2504AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1783C822-8D84-47B2-9010-BDC8F2504AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{449E1DB5-1BB9-494A-BE03-0F819691666B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{449E1DB5-1BB9-494A-BE03-0F819691666B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{449E1DB5-1BB9-494A-BE03-0F819691666B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{449E1DB5-1BB9-494A-BE03-0F819691666B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BC000D08-EBAC-4CB7-A02F-9CA561BA9547}
+	EndGlobalSection
+EndGlobal
